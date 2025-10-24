@@ -11,13 +11,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import com.example.applevel_up.R
 import kotlinx.coroutines.delay
-//Animacion de inicioo
 
 @Composable
 fun SplashScreen(navController: NavController) {
     LaunchedEffect(key1 = true) {
         delay(3000)
-        navController.navigate("productList") {
+        navController.navigate("registration") {
             popUpTo("splash") { inclusive = true }
         }
     }

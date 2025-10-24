@@ -39,6 +39,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.applevel_up.model.Product
+import com.example.applevel_up.ui.RegistrationScreen
 import com.example.applevel_up.ui.SplashScreen
 import com.example.applevel_up.ui.add_product.AddProductScreen
 import com.example.applevel_up.ui.theme.AppLevelUpTheme
@@ -62,6 +63,9 @@ fun AppNavigation() {
     NavHost(navController = navController, startDestination = "splash") {
         composable("splash") {
             SplashScreen(navController)
+        }
+        composable("registration") {
+            RegistrationScreen(navController)
         }
         composable("productList") {
             ProductScreen(
