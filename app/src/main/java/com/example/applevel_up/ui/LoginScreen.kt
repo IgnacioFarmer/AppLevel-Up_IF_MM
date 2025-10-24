@@ -50,9 +50,12 @@ fun LoginScreen(navController: NavController, registeredEmail: String) {
         Spacer(modifier = Modifier.height(24.dp))
         Button(
             onClick = {
-                // Aquí iría la lógica de validación del login
-                // Por ahora, navegamos directamente a la pantalla principal
-                navController.navigate("mainScreen") {
+                val isAdmin = email.equals("admin@admin.com", ignoreCase = true) && password == "admin"
+                val destination = if (isAdmin) "productList" else "mainScreen"
+                
+                navController.navigate(destination) {
+                    // Limpiamos el historial de navegación para que el usuario no pueda volver
+                    // a las pantallas de registro o login una vez ha iniciado sesión.
                     popUpTo("registration") { inclusive = true }
                 }
             },

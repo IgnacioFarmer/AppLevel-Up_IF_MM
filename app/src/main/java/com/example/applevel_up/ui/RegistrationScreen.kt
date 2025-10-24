@@ -95,6 +95,9 @@ fun RegistrationScreen(navController: NavController) {
         ) {
             Text("Registrar")
         }
+        TextButton(onClick = { navController.navigate("login/ ") }) {
+            Text("¿Ya tienes una cuenta? Inicia sesión")
+        }
     }
 }
 
