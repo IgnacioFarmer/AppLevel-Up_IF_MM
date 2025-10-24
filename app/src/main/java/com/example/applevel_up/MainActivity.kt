@@ -117,7 +117,7 @@ fun ProductScreen(
     }
 }
 
-@Composable
+@Composable //ejemplo
 fun ProductList(products: List<Product>, modifier: Modifier = Modifier, onDeleteProduct: (Product) -> Unit) {
     LazyColumn(modifier = modifier) {
         items(products) { product ->
