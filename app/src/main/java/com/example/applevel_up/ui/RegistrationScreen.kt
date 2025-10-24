@@ -25,7 +25,7 @@ fun RegistrationScreen(navController: NavController) {
 
     val isEmailValid = email.contains("@") && email.endsWith(".com")
     val isFormValid = nombre.isNotBlank() && isEmailValid && password.isNotBlank() && direccion.isNotBlank() && aceptoTerminos
-
+//duyawd
     Column(
         modifier = Modifier
             .fillMaxSize()
