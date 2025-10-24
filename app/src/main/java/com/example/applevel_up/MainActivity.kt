@@ -4,14 +4,20 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -20,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -49,7 +56,10 @@ fun AppNavigation() {
 
     NavHost(navController = navController, startDestination = "productList") {
         composable("productList") {
-            ProductScreen(products = productList, onAddProduct = { navController.navigate("agregarProducto") })
+            ProductScreen(
+                products = productList,
+                onAddProduct = { navController.navigate("agregarProducto") },
+                onDeleteProduct = { productList = productList - it })
         }
         composable("agregarProducto") {
             AddProductScreen(
@@ -65,7 +75,12 @@ fun AppNavigation() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProductScreen(products: List<Product>, onAddProduct: () -> Unit, modifier: Modifier = Modifier) {
+fun ProductScreen(
+    products: List<Product>,
+    onAddProduct: () -> Unit,
+    onDeleteProduct: (Product) -> Unit,
+    modifier: Modifier = Modifier
+) {
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
@@ -88,28 +103,38 @@ fun ProductScreen(products: List<Product>, onAddProduct: () -> Unit, modifier: M
     ) { innerPadding ->
         ProductList(
             products = products,
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier.padding(innerPadding),
+            onDeleteProduct = onDeleteProduct
         )
     }
 }
 
 @Composable
-fun ProductList(products: List<Product>, modifier: Modifier = Modifier) {
+fun ProductList(products: List<Product>, modifier: Modifier = Modifier, onDeleteProduct: (Product) -> Unit) {
     LazyColumn(modifier = modifier) {
         items(products) { product ->
-            ProductItem(product = product)
+            ProductItem(product = product, onDelete = { onDeleteProduct(product) })
         }
     }
 }
 
 @Composable
-fun ProductItem(product: Product, modifier: Modifier = Modifier) {
-    Column(modifier = modifier
-        .padding(16.dp)
-        .fillMaxWidth()) {
-        Text(text = "Nombre: ${product.nombre}")
-        Text(text = "Precio: $${product.precio}")
-        Text(text = "Descripción: ${product.descripcion}")
+fun ProductItem(product: Product, modifier: Modifier = Modifier, onDelete: () -> Unit) {
+    Row(
+        modifier = modifier
+            .padding(16.dp)
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Column(modifier = Modifier.weight(1f)) {
+            Text(text = "Nombre: ${product.nombre}")
+            Text(text = "Precio: $${product.precio}")
+            Text(text = "Descripción: ${product.descripcion}")
+        }
+        IconButton(onClick = onDelete) {
+            Icon(imageVector = Icons.Default.Delete, contentDescription = "Eliminar producto")
+        }
     }
 }
 
@@ -117,6 +142,6 @@ fun ProductItem(product: Product, modifier: Modifier = Modifier) {
 @Composable
 fun ProductScreenPreview() {
     AppLevelUpTheme {
-        ProductScreen(products = emptyList(), onAddProduct = {})
+        ProductScreen(products = emptyList(), onAddProduct = {}, onDeleteProduct = {})
     }
 }
