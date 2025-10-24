@@ -117,7 +117,7 @@ fun ProductScreen(
     }
 }
 
-@Composable //ejemplo
+@Composable
 fun ProductList(products: List<Product>, modifier: Modifier = Modifier, onDeleteProduct: (Product) -> Unit) {
     LazyColumn(modifier = modifier) {
         items(products) { product ->
@@ -135,7 +135,7 @@ fun ProductItem(product: Product, modifier: Modifier = Modifier, onDelete: () ->
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        //imagen para los productoss
+        //imagen para los productos
         product.imageUri?.let {
             Image(
                 painter = rememberAsyncImagePainter(it),
