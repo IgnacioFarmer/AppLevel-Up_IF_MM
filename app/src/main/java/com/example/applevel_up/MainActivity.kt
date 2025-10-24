@@ -135,7 +135,7 @@ fun ProductItem(product: Product, modifier: Modifier = Modifier, onDelete: () ->
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        //imagen para los productos
+        //imagen para los productoss
         product.imageUri?.let {
             Image(
                 painter = rememberAsyncImagePainter(it),
