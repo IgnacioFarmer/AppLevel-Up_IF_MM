@@ -40,7 +40,7 @@ fun MainScreen(navController: NavController) {
             modifier = Modifier.padding(bottom = 24.dp)
         )
 
-        // Botón para ver el catálogoo
+        // Botón para ver el catálogo
         Button(
             onClick = { navController.navigate("productList") },
             modifier = Modifier
