@@ -7,9 +7,12 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -34,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import coil.compose.rememberAsyncImagePainter
 import com.example.applevel_up.model.Product
 import com.example.applevel_up.ui.add_product.AddProductScreen
 import com.example.applevel_up.ui.theme.AppLevelUpTheme
@@ -127,6 +131,14 @@ fun ProductItem(product: Product, modifier: Modifier = Modifier, onDelete: () ->
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
+        product.imageUri?.let {
+            Image(
+                painter = rememberAsyncImagePainter(it),
+                contentDescription = "Imagen del producto",
+                modifier = Modifier.size(64.dp)
+            )
+            Spacer(modifier = Modifier.width(16.dp))
+        }
         Column(modifier = Modifier.weight(1f)) {
             Text(text = "Nombre: ${product.nombre}")
             Text(text = "Precio: $${product.precio}")
